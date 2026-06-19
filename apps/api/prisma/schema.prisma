@@ -1,0 +1,1048 @@
+// =============================================================================
+// HRManager4U.ai — Enterprise AI HR Operating System
+// Prisma Schema — PostgreSQL + pgvector
+// Supports: Malaysia (MY), Australia (AU), Singapore (SG)
+// Architecture: Multi-tenant SaaS (every entity has tenant_id)
+// =============================================================================
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum Plan {
+  TRIAL
+  STARTER
+  PROFESSIONAL
+  ENTERPRISE
+
+  @@map("plan")
+}
+
+enum Country {
+  MY
+  AU
+  SG
+
+  @@map("country")
+}
+
+enum Role {
+  SUPER_ADMIN
+  COMPANY_ADMIN
+  HR_MANAGER
+  MANAGER
+  EMPLOYEE
+  AUDITOR
+
+  @@map("role")
+}
+
+enum CompanySize {
+  MICRO
+  SMALL
+  MEDIUM
+  LARGE
+
+  @@map("company_size")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  NON_BINARY
+  PREFER_NOT_TO_SAY
+
+  @@map("gender")
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERN
+  TEMPORARY
+
+  @@map("employment_type")
+}
+
+enum EmploymentStatus {
+  CANDIDATE
+  ACTIVE
+  PROBATION
+  NOTICE_PERIOD
+  RESIGNED
+  TERMINATED
+  RETIRED
+  ALUMNI
+
+  @@map("employment_status")
+}
+
+enum ContractType {
+  PERMANENT
+  FIXED_TERM
+  CONTRACT
+  INTERNSHIP
+
+  @@map("contract_type")
+}
+
+enum ContractStatus {
+  DRAFT
+  ACTIVE
+  EXPIRED
+  TERMINATED
+
+  @@map("contract_status")
+}
+
+enum DocumentType {
+  EMPLOYMENT_CONTRACT
+  OFFER_LETTER
+  WARNING_LETTER
+  SHOW_CAUSE_LETTER
+  TERMINATION_LETTER
+  PROMOTION_LETTER
+  CONFIRMATION_LETTER
+  RESIGNATION_ACCEPTANCE_LETTER
+  EXPERIENCE_LETTER
+  INTERNSHIP_LETTER
+  LEAVE_FORM
+  EMPLOYEE_HANDBOOK
+  CODE_OF_CONDUCT
+  CUSTOM
+
+  @@map("document_type")
+}
+
+enum DocumentStatus {
+  DRAFT
+  GENERATED
+  SENT
+  ACKNOWLEDGED
+  ARCHIVED
+
+  @@map("document_status")
+}
+
+enum KnowledgeBaseType {
+  EMPLOYMENT_ACT
+  INDUSTRIAL_RELATIONS_ACT
+  COMPANY_HANDBOOK
+  CODE_OF_CONDUCT
+  CUSTOM
+
+  @@map("knowledge_base_type")
+}
+
+enum KnowledgeBaseStatus {
+  PENDING
+  PROCESSING
+  READY
+  ERROR
+
+  @@map("knowledge_base_status")
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+
+  @@map("message_role")
+}
+
+enum HandbookStatus {
+  DRAFT
+  FINALIZED
+  ARCHIVED
+
+  @@map("handbook_status")
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+
+  @@map("risk_level")
+}
+
+enum AuditSeverity {
+  INFO
+  WARNING
+  ERROR
+  CRITICAL
+
+  @@map("audit_severity")
+}
+
+// =============================================================================
+// TENANT — Top-level organization (may own multiple companies)
+// =============================================================================
+
+model Tenant {
+  id        String   @id @default(uuid()) @map("id")
+  name      String   @map("name")
+  slug      String   @unique @map("slug")
+  plan      Plan     @default(TRIAL) @map("plan")
+  country   Country  @map("country")
+  isActive  Boolean  @default(true) @map("is_active")
+  settings  Json?    @map("settings")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  companies      Company[]
+  users          User[]
+  auditLogs      AuditLog[]
+  knowledgeBases KnowledgeBase[]
+  LeaveType      LeaveType[]
+
+  @@map("tenants")
+}
+
+// =============================================================================
+// USER — System users (not necessarily employees)
+// =============================================================================
+
+model User {
+  id                  String    @id @default(uuid()) @map("id")
+  tenantId            String    @map("tenant_id")
+  email               String    @map("email")
+  passwordHash        String    @map("password_hash")
+  role                Role      @default(EMPLOYEE) @map("role")
+  firstName           String    @map("first_name")
+  lastName            String    @map("last_name")
+  phone               String?   @map("phone")
+  isActive            Boolean   @default(true) @map("is_active")
+  mfaEnabled          Boolean   @default(false) @map("mfa_enabled")
+  mfaSecret           String?   @map("mfa_secret")
+  emailVerified       Boolean   @default(false) @map("email_verified")
+  lastLoginAt         DateTime? @map("last_login_at")
+  passwordResetToken  String?   @map("password_reset_token")
+  passwordResetExpiry DateTime? @map("password_reset_expiry")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  tenant   Tenant    @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  employee Employee?
+  sessions Session[]
+
+  @@unique([tenantId, email], map: "users_tenant_email_unique")
+  @@index([tenantId], map: "users_tenant_id_idx")
+  @@map("users")
+}
+
+// =============================================================================
+// SESSION — JWT refresh tokens for auth management
+// =============================================================================
+
+model Session {
+  id           String    @id @default(uuid()) @map("id")
+  userId       String    @map("user_id")
+  tenantId     String    @map("tenant_id")
+  refreshToken String    @map("refresh_token")
+  deviceInfo   String?   @map("device_info")
+  ipAddress    String?   @map("ip_address")
+  expiresAt    DateTime  @map("expires_at")
+  revokedAt    DateTime? @map("revoked_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "sessions_user_id_idx")
+  @@index([refreshToken], map: "sessions_refresh_token_idx")
+  @@map("sessions")
+}
+
+// =============================================================================
+// PERMISSION — RBAC permission definitions
+// =============================================================================
+
+model Permission {
+  id       String @id @default(uuid()) @map("id")
+  role     Role   @map("role")
+  resource String @map("resource")
+  action   String @map("action")
+
+  @@unique([role, resource, action], map: "permissions_role_resource_action_unique")
+  @@map("permissions")
+}
+
+// =============================================================================
+// COMPANY — A company within a tenant
+// =============================================================================
+
+model Company {
+  id        String      @id @default(uuid()) @map("id")
+  tenantId  String      @map("tenant_id")
+  slug      String      @unique @default(uuid()) @map("slug")
+  name      String      @map("name")
+  legalName String?     @map("legal_name")
+  regNumber String?     @map("reg_number")
+  taxNumber String?     @map("tax_number")
+  industry  String      @map("industry")
+  size      CompanySize @default(SMALL) @map("size")
+  country   Country     @map("country")
+  address   String      @map("address")
+  city      String      @map("city")
+  state     String      @map("state")
+  postcode  String      @map("postcode")
+  phone     String      @map("phone")
+  email     String      @map("email")
+  website   String?     @map("website")
+  logoUrl   String?     @map("logo_url")
+  isActive  Boolean     @default(true) @map("is_active")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  tenant            Tenant             @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  branches          Branch[]
+  departments       Department[]
+  employees         Employee[]
+  documents         Document[]
+  contracts         Contract[]
+  handbookPolicies  HandbookPolicy[]
+  complianceRecords ComplianceRecord[]
+
+  @@index([tenantId], map: "companies_tenant_id_idx")
+  @@map("companies")
+}
+
+// =============================================================================
+// BRANCH — Physical branches of a company
+// =============================================================================
+
+model Branch {
+  id             String   @id @default(uuid()) @map("id")
+  tenantId       String   @map("tenant_id")
+  companyId      String   @map("company_id")
+  name           String   @map("name")
+  address        String   @map("address")
+  city           String   @map("city")
+  state          String   @map("state")
+  postcode       String   @map("postcode")
+  isHeadquarters Boolean  @default(false) @map("is_headquarters")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  employees Employee[]
+
+  @@index([tenantId, companyId], map: "branches_tenant_company_idx")
+  @@map("branches")
+}
+
+// =============================================================================
+// DEPARTMENT — Departments within a company (supports hierarchy)
+// =============================================================================
+
+model Department {
+  id                 String   @id @default(uuid()) @map("id")
+  tenantId           String   @map("tenant_id")
+  companyId          String   @map("company_id")
+  name               String   @map("name")
+  code               String?  @map("code")
+  parentDepartmentId String?  @map("parent_department_id")
+  managerId          String?  @map("manager_id")
+  budget             Decimal? @map("budget") @db.Decimal(15, 2)
+  isActive           Boolean  @default(true) @map("is_active")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  company          Company      @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  parentDepartment Department?  @relation("DepartmentHierarchy", fields: [parentDepartmentId], references: [id])
+  subDepartments   Department[] @relation("DepartmentHierarchy")
+  teams            Team[]
+  employees        Employee[]
+
+  @@index([tenantId, companyId], map: "departments_tenant_company_idx")
+  @@map("departments")
+}
+
+// =============================================================================
+// TEAM — Teams within a department
+// =============================================================================
+
+model Team {
+  id           String   @id @default(uuid()) @map("id")
+  tenantId     String   @map("tenant_id")
+  departmentId String   @map("department_id")
+  name         String   @map("name")
+  managerId    String?  @map("manager_id")
+  budget       Decimal? @map("budget") @db.Decimal(15, 2)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  department Department @relation(fields: [departmentId], references: [id], onDelete: Restrict)
+  employees  Employee[]
+
+  @@index([tenantId, departmentId], map: "teams_tenant_department_idx")
+  @@map("teams")
+}
+
+// =============================================================================
+// EMPLOYEE — Employee profile (core HR entity)
+// =============================================================================
+
+model Employee {
+  id                       String           @id @default(uuid()) @map("id")
+  tenantId                 String           @map("tenant_id")
+  companyId                String           @map("company_id")
+  userId                   String?          @unique @map("user_id")
+  employeeNumber           String           @map("employee_number")
+  firstName                String           @map("first_name")
+  lastName                 String           @map("last_name")
+  preferredName            String?          @map("preferred_name")
+  dateOfBirth              DateTime         @map("date_of_birth") @db.Date
+  gender                   Gender           @map("gender")
+  nationality              String           @map("nationality")
+  nricPassport             String           @map("nric_passport") // ENCRYPTED
+  visaDetails              String?          @map("visa_details") // ENCRYPTED
+  personalEmail            String           @map("personal_email")
+  workEmail                String           @map("work_email")
+  phone                    String           @map("phone")
+  mobile                   String?          @map("mobile")
+  address                  String           @map("address")
+  city                     String           @map("city")
+  state                    String           @map("state")
+  postcode                 String           @map("postcode")
+  country                  Country          @map("country")
+  departmentId             String?          @map("department_id")
+  teamId                   String?          @map("team_id")
+  branchId                 String?          @map("branch_id")
+  managerId                String?          @map("manager_id")
+  jobTitle                 String           @map("job_title")
+  jobLevel                 String?          @map("job_level")
+  salaryBand               String?          @map("salary_band")
+  employmentType           EmploymentType   @map("employment_type")
+  employmentStatus         EmploymentStatus @default(PROBATION) @map("employment_status")
+  hireDate                 DateTime         @map("hire_date") @db.Date
+  confirmationDate         DateTime?        @map("confirmation_date") @db.Date
+  terminationDate          DateTime?        @map("termination_date") @db.Date
+  probationEndDate         DateTime?        @map("probation_end_date") @db.Date
+  noticePeriodDays         Int              @default(30) @map("notice_period_days")
+  baseSalary               String?          @map("base_salary") // ENCRYPTED (Stored as string ciphertext)
+  bankName                 String?          @map("bank_name")
+  bankAccount              String?          @map("bank_account") // ENCRYPTED
+  bankCode                 String?          @map("bank_code")
+  emergencyContactName     String           @map("emergency_contact_name")
+  emergencyContactPhone    String           @map("emergency_contact_phone")
+  emergencyContactRelation String           @map("emergency_contact_relation")
+  avatarUrl                String?          @map("avatar_url")
+  isActive                 Boolean          @default(true) @map("is_active")
+  createdAt                DateTime         @default(now()) @map("created_at")
+  updatedAt                DateTime         @updatedAt @map("updated_at")
+
+  // Relations
+  user           User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
+  company        Company          @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  department     Department?      @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+  team           Team?            @relation(fields: [teamId], references: [id], onDelete: SetNull)
+  branch         Branch?          @relation(fields: [branchId], references: [id], onDelete: SetNull)
+  manager        Employee?        @relation("EmployeeReportsTo", fields: [managerId], references: [id])
+  reports        Employee[]       @relation("EmployeeReportsTo")
+  contracts      Contract[]
+  documents      Document[]
+  files          EmployeeFile[]
+  LeaveBalance   LeaveBalance[]
+  LeaveRequest   LeaveRequest[]
+  LifecycleEvent LifecycleEvent[]
+
+  @@unique([tenantId, employeeNumber], map: "employees_tenant_employee_number_unique")
+  @@index([tenantId, companyId], map: "employees_tenant_company_idx")
+  @@map("employees")
+}
+
+// =============================================================================
+// CONTRACT — Employment contracts linked to an employee
+// =============================================================================
+
+model Contract {
+  id                  String         @id @default(uuid()) @map("id")
+  tenantId            String         @map("tenant_id")
+  employeeId          String         @map("employee_id")
+  companyId           String         @map("company_id")
+  contractType        ContractType   @map("contract_type")
+  startDate           DateTime       @map("start_date") @db.Date
+  endDate             DateTime?      @map("end_date") @db.Date
+  position            String         @map("position")
+  department          String         @map("department")
+  salary              Decimal        @map("salary") @db.Decimal(15, 2)
+  currency            String         @default("MYR") @map("currency")
+  workingHoursPerWeek Int            @map("working_hours_per_week")
+  status              ContractStatus @default(DRAFT) @map("status")
+  documentUrl         String?        @map("document_url")
+  notes               String?        @map("notes")
+  createdBy           String         @map("created_by")
+  createdAt           DateTime       @default(now()) @map("created_at")
+  updatedAt           DateTime       @updatedAt @map("updated_at")
+
+  // Relations
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Restrict)
+  company  Company  @relation(fields: [companyId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, employeeId], map: "contracts_tenant_employee_idx")
+  @@map("contracts")
+}
+
+// =============================================================================
+// DOCUMENT — Generated HR documents (offer letters, warnings, etc.)
+// =============================================================================
+
+model Document {
+  id             String         @id @default(uuid()) @map("id")
+  tenantId       String         @map("tenant_id")
+  companyId      String         @map("company_id")
+  employeeId     String?        @map("employee_id")
+  type           DocumentType   @map("type")
+  title          String         @map("title")
+  description    String?        @map("description")
+  status         DocumentStatus @default(DRAFT) @map("status")
+  templateData   Json           @map("template_data")
+  pdfUrl         String?        @map("pdf_url")
+  docxUrl        String?        @map("docx_url")
+  fileSize       Int?           @map("file_size")
+  generatedAt    DateTime?      @map("generated_at")
+  sentAt         DateTime?      @map("sent_at")
+  acknowledgedAt DateTime?      @map("acknowledged_at")
+  expiresAt      DateTime?      @map("expires_at")
+  generatedBy    String         @map("generated_by")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  // Relations
+  company  Company   @relation(fields: [companyId], references: [id], onDelete: Restrict)
+  employee Employee? @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, companyId], map: "documents_tenant_company_idx")
+  @@index([tenantId, employeeId], map: "documents_tenant_employee_idx")
+  @@map("documents")
+}
+
+// =============================================================================
+// KNOWLEDGE BASE — Uploaded source documents for RAG pipeline
+// =============================================================================
+
+model KnowledgeBase {
+  id               String              @id @default(uuid()) @map("id")
+  tenantId         String?             @map("tenant_id")
+  name             String              @map("name")
+  description      String?             @map("description")
+  type             KnowledgeBaseType   @map("type")
+  country          Country             @map("country")
+  jurisdiction     String?             @map("jurisdiction")
+  isSystemDocument Boolean             @default(false) @map("is_system_document")
+  status           KnowledgeBaseStatus @default(PENDING) @map("status")
+  fileUrl          String              @map("file_url")
+  fileSize         Int                 @map("file_size")
+  mimeType         String              @map("mime_type")
+  pageCount        Int?                @map("page_count")
+  chunkCount       Int                 @default(0) @map("chunk_count")
+  errorMessage     String?             @map("error_message")
+  processedAt      DateTime?           @map("processed_at")
+  createdBy        String?             @map("created_by")
+  createdAt        DateTime            @default(now()) @map("created_at")
+  updatedAt        DateTime            @updatedAt @map("updated_at")
+
+  // Relations
+  tenant Tenant?         @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+  chunks DocumentChunk[]
+
+  @@index([tenantId], map: "knowledge_bases_tenant_id_idx")
+  @@index([type, country], map: "knowledge_bases_type_country_idx")
+  @@map("knowledge_bases")
+}
+
+// =============================================================================
+// DOCUMENT CHUNK — Vector chunks for RAG retrieval (pgvector)
+// =============================================================================
+
+model DocumentChunk {
+  id              String                       @id @default(uuid()) @map("id")
+  knowledgeBaseId String                       @map("knowledge_base_id")
+  tenantId        String?                      @map("tenant_id")
+  chunkIndex      Int                          @map("chunk_index")
+  content         String                       @map("content")
+  contentTokens   Int                          @map("content_tokens")
+  pageNumber      Int?                         @map("page_number")
+  sectionTitle    String?                      @map("section_title")
+  /// pgvector embedding — 1536 dimensions (text-embedding-3-small / Ada-002)
+  embedding       Unsupported("vector(1536)")? @map("embedding")
+  metadata        Json?                        @map("metadata")
+  createdAt       DateTime                     @default(now()) @map("created_at")
+
+  // Relations
+  knowledgeBase KnowledgeBase @relation(fields: [knowledgeBaseId], references: [id], onDelete: Cascade)
+
+  @@index([knowledgeBaseId], map: "document_chunks_knowledge_base_id_idx")
+  @@index([tenantId], map: "document_chunks_tenant_id_idx")
+  @@map("document_chunks")
+}
+
+// =============================================================================
+// AI CONVERSATION — AI HR Assistant conversation sessions
+// =============================================================================
+
+model AiConversation {
+  id        String   @id @default(uuid()) @map("id")
+  tenantId  String   @map("tenant_id")
+  userId    String   @map("user_id")
+  title     String?  @map("title")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  messages AiMessage[]
+
+  @@index([tenantId, userId], map: "ai_conversations_tenant_user_idx")
+  @@map("ai_conversations")
+}
+
+// =============================================================================
+// AI MESSAGE — Individual messages within an AI conversation
+// =============================================================================
+
+model AiMessage {
+  id               String      @id @default(uuid()) @map("id")
+  conversationId   String      @map("conversation_id")
+  tenantId         String      @map("tenant_id")
+  userId           String      @map("user_id")
+  role             MessageRole @map("role")
+  content          String      @map("content")
+  confidence       Float?      @map("confidence")
+  /// Array of { sourceId, chunkId, excerpt, clause }
+  citations        Json?       @map("citations")
+  /// Array of KnowledgeBase IDs used for this message
+  sourcesUsed      Json?       @map("sources_used")
+  promptTokens     Int?        @map("prompt_tokens")
+  completionTokens Int?        @map("completion_tokens")
+  modelUsed        String?     @map("model_used")
+  processingMs     Int?        @map("processing_ms")
+  createdAt        DateTime    @default(now()) @map("created_at")
+
+  // Relations
+  conversation AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId], map: "ai_messages_conversation_id_idx")
+  @@map("ai_messages")
+}
+
+// =============================================================================
+// HANDBOOK POLICY — Generated employee handbook configurations
+// =============================================================================
+
+model HandbookPolicy {
+  id               String         @id @default(uuid()) @map("id")
+  tenantId         String         @map("tenant_id")
+  companyId        String         @map("company_id")
+  name             String         @map("name")
+  version          String         @map("version")
+  country          Country        @map("country")
+  /// Wizard form answers / policy configuration
+  policies         Json           @map("policies")
+  status           HandbookStatus @default(DRAFT) @map("status")
+  handbookUrl      String?        @map("handbook_url")
+  codeOfConductUrl String?        @map("code_of_conduct_url")
+  publishedAt      DateTime?      @map("published_at")
+  createdBy        String         @map("created_by")
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+
+  // Relations
+  company Company @relation(fields: [companyId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, companyId], map: "handbook_policies_tenant_company_idx")
+  @@map("handbook_policies")
+}
+
+// =============================================================================
+// COMPLIANCE RECORD — Compliance assessments and scores
+// =============================================================================
+
+model ComplianceRecord {
+  id              String    @id @default(uuid()) @map("id")
+  tenantId        String    @map("tenant_id")
+  companyId       String    @map("company_id")
+  /// Score 0–100
+  score           Int       @map("score")
+  riskLevel       RiskLevel @map("risk_level")
+  /// Array of { item, category, status, evidence }
+  checklist       Json      @map("checklist")
+  /// Array of missing policy names
+  missingPolicies Json      @map("missing_policies")
+  reportUrl       String?   @map("report_url")
+  notes           String?   @map("notes")
+  assessedAt      DateTime  @map("assessed_at")
+  createdBy       String    @map("created_by")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  company Company @relation(fields: [companyId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, companyId], map: "compliance_records_tenant_company_idx")
+  @@map("compliance_records")
+}
+
+// =============================================================================
+// SYSTEM SETTINGS — Dynamic global and tenant configurations
+// =============================================================================
+
+model SystemSetting {
+  id        String   @id @default(uuid()) @map("id")
+  tenantId  String?  @map("tenant_id") // Null for global, specific for tenant-overrides
+  category  String   @map("category") // 'AI', 'EMAIL', 'STORAGE', 'COMPANY'
+  key       String   @map("key")
+  value     String   @map("value") // Plaintext or Ciphertext
+  isSecret  Boolean  @default(false) @map("is_secret")
+  updatedBy String?  @map("updated_by")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([tenantId, key])
+  @@map("system_settings")
+}
+
+// =============================================================================
+// AUDIT LOG — Immutable append-only audit trail
+// Covers all system actions including AI queries, auth events, CRUD operations
+// =============================================================================
+
+model AuditLog {
+  id                String        @id @default(uuid()) @map("id")
+  /// Nullable: super admin actions may not be scoped to a tenant
+  tenantId          String?       @map("tenant_id")
+  userId            String?       @map("user_id")
+  /// Denormalized snapshot — preserved even if user is deleted
+  userEmail         String?       @map("user_email")
+  /// Denormalized role snapshot at time of action
+  userRole          String?       @map("user_role")
+  /// e.g. 'CREATE', 'UPDATE', 'DELETE', 'LOGIN', 'LOGOUT', 'AI_QUERY'
+  action            String        @map("action")
+  /// e.g. 'Employee', 'Document', 'AiMessage'
+  resource          String        @map("resource")
+  resourceId        String?       @map("resource_id")
+  description       String        @map("description")
+  /// Before/after state, request body snapshot, diff, etc.
+  metadata          Json?         @map("metadata")
+  /// The AI prompt text (for AI_QUERY actions)
+  aiPrompt          String?       @map("ai_prompt")
+  /// The AI response text (for AI_QUERY actions)
+  aiResponse        String?       @map("ai_response")
+  /// Source documents retrieved during RAG (for AI_QUERY actions)
+  aiSourceDocuments Json?         @map("ai_source_documents")
+  ipAddress         String?       @map("ip_address")
+  userAgent         String?       @map("user_agent")
+  httpMethod        String?       @map("http_method")
+  httpPath          String?       @map("http_path")
+  httpStatus        Int?          @map("http_status")
+  durationMs        Int?          @map("duration_ms")
+  severity          AuditSeverity @default(INFO) @map("severity")
+  /// Primary timestamp — no updatedAt (this table is append-only)
+  timestamp         DateTime      @default(now()) @map("timestamp")
+
+  // Relations
+  tenant Tenant? @relation(fields: [tenantId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, timestamp], map: "audit_logs_tenant_timestamp_idx")
+  @@index([userId], map: "audit_logs_user_id_idx")
+  @@index([resource, resourceId], map: "audit_logs_resource_resource_id_idx")
+  @@map("audit_logs")
+}
+
+// =============================================================================
+// SPRINT 2: LEAVE MANAGEMENT
+// =============================================================================
+
+enum LeaveRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+
+  @@map("leave_request_status")
+}
+
+model LeaveType {
+  id          String   @id @default(uuid()) @map("id")
+  tenantId    String   @map("tenant_id")
+  name        String   @map("name")
+  description String?  @map("description")
+  isPaid      Boolean  @default(true) @map("is_paid")
+  defaultDays Int      @map("default_days")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  tenant   Tenant         @relation(fields: [tenantId], references: [id], onDelete: Restrict)
+  balances LeaveBalance[]
+  requests LeaveRequest[]
+
+  @@index([tenantId], map: "leave_types_tenant_idx")
+  @@map("leave_types")
+}
+
+model LeaveBalance {
+  id          String  @id @default(uuid()) @map("id")
+  tenantId    String  @map("tenant_id")
+  employeeId  String  @map("employee_id")
+  leaveTypeId String  @map("leave_type_id")
+  year        Int     @map("year")
+  totalDays   Decimal @map("total_days") @db.Decimal(5, 2)
+  takenDays   Decimal @default(0) @map("taken_days") @db.Decimal(5, 2)
+  pendingDays Decimal @default(0) @map("pending_days") @db.Decimal(5, 2)
+
+  employee  Employee  @relation(fields: [employeeId], references: [id], onDelete: Restrict)
+  leaveType LeaveType @relation(fields: [leaveTypeId], references: [id], onDelete: Restrict)
+
+  @@unique([employeeId, leaveTypeId, year], map: "leave_balances_employee_type_year_unique")
+  @@index([tenantId, employeeId], map: "leave_balances_tenant_employee_idx")
+  @@map("leave_balances")
+}
+
+model LeaveRequest {
+  id          String             @id @default(uuid()) @map("id")
+  tenantId    String             @map("tenant_id")
+  employeeId  String             @map("employee_id")
+  leaveTypeId String             @map("leave_type_id")
+  startDate   DateTime           @map("start_date") @db.Date
+  endDate     DateTime           @map("end_date") @db.Date
+  days        Decimal            @map("days") @db.Decimal(5, 2)
+  reason      String             @map("reason")
+  status      LeaveRequestStatus @default(PENDING) @map("status")
+  managerId   String?            @map("manager_id")
+  reviewedAt  DateTime?          @map("reviewed_at")
+  createdAt   DateTime           @default(now()) @map("created_at")
+  updatedAt   DateTime           @updatedAt @map("updated_at")
+
+  employee  Employee  @relation(fields: [employeeId], references: [id], onDelete: Restrict)
+  leaveType LeaveType @relation(fields: [leaveTypeId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, employeeId], map: "leave_requests_tenant_employee_idx")
+  @@index([managerId, status], map: "leave_requests_manager_status_idx")
+  @@map("leave_requests")
+}
+
+// =============================================================================
+// SPRINT 3: EMPLOYEE DIGITAL FILE (VAULT)
+// =============================================================================
+
+enum FileCategory {
+  PASSPORT
+  VISA
+  CONTRACT
+  CERTIFICATE
+  LEAVE_RECORD
+  PERFORMANCE_RECORD
+  DISCIPLINARY_RECORD
+  OTHER
+
+  @@map("file_category")
+}
+
+model EmployeeFile {
+  id          String       @id @default(uuid()) @map("id")
+  tenantId    String       @map("tenant_id")
+  employeeId  String       @map("employee_id")
+  category    FileCategory @map("category")
+  title       String       @map("title")
+  fileUrl     String       @map("file_url")
+  fileSize    Int          @map("file_size")
+  mimeType    String       @map("mime_type")
+  expiryDate  DateTime?    @map("expiry_date") @db.Date
+  isEncrypted Boolean      @default(false) @map("is_encrypted")
+  uploadedBy  String       @map("uploaded_by")
+  createdAt   DateTime     @default(now()) @map("created_at")
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, employeeId], map: "employee_files_tenant_employee_idx")
+  @@map("employee_files")
+}
+
+// =============================================================================
+// SPRINT 3: DOCUMENT TEMPLATE ENGINE
+// =============================================================================
+
+model DocumentTemplate {
+  id          String       @id @default(uuid()) @map("id")
+  tenantId    String       @map("tenant_id")
+  type        DocumentType @map("type")
+  name        String       @map("name")
+  description String?      @map("description")
+  content     String       @map("content") @db.Text // Handlebars HTML template
+  variables   Json         @map("variables") // Array of required variable names
+  version     String       @default("1.0") @map("version")
+  isActive    Boolean      @default(true) @map("is_active")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  @@unique([tenantId, type, version], map: "document_templates_tenant_type_version_unique")
+  @@map("document_templates")
+}
+
+// =============================================================================
+// SPRINT 4: WORKFLOW ENGINE
+// =============================================================================
+
+enum WorkflowType {
+  LEAVE
+  PROMOTION
+  DOCUMENT
+  EXPENSE
+  RECRUITMENT
+  CUSTOM
+
+  @@map("workflow_type")
+}
+
+enum WorkflowStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ESCALATED
+  CANCELLED
+
+  @@map("workflow_status")
+}
+
+model WorkflowTemplate {
+  id        String       @id @default(uuid()) @map("id")
+  tenantId  String       @map("tenant_id")
+  type      WorkflowType @map("type")
+  name      String       @map("name")
+  steps     Json         @map("steps") // e.g. [{ level: 1, approverRole: 'MANAGER', timeoutHours: 48, escalationRole: 'HR_MANAGER' }]
+  isActive  Boolean      @default(true) @map("is_active")
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+
+  instances WorkflowInstance[]
+
+  @@unique([tenantId, type], map: "workflow_templates_tenant_type_unique")
+  @@map("workflow_templates")
+}
+
+model WorkflowInstance {
+  id             String         @id @default(uuid()) @map("id")
+  tenantId       String         @map("tenant_id")
+  templateId     String         @map("template_id")
+  status         WorkflowStatus @default(PENDING) @map("status")
+  currentLevel   Int            @default(1) @map("current_level")
+  targetResource String         @map("target_resource") // e.g. "LeaveRequest"
+  targetId       String         @map("target_id")
+  requesterId    String         @map("requester_id")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  template WorkflowTemplate  @relation(fields: [templateId], references: [id], onDelete: Restrict)
+  logs     WorkflowStepLog[]
+
+  @@index([tenantId, targetResource, targetId], map: "workflow_instances_target_idx")
+  @@map("workflow_instances")
+}
+
+model WorkflowStepLog {
+  id         String         @id @default(uuid()) @map("id")
+  instanceId String         @map("instance_id")
+  level      Int            @map("level")
+  status     WorkflowStatus @map("status")
+  approverId String         @map("approver_id")
+  comments   String?        @map("comments")
+  actionAt   DateTime       @default(now()) @map("action_at")
+
+  instance WorkflowInstance @relation(fields: [instanceId], references: [id], onDelete: Cascade)
+
+  @@index([instanceId], map: "workflow_step_logs_instance_idx")
+  @@map("workflow_step_logs")
+}
+
+// =============================================================================
+// SPRINT 4: NOTIFICATION ENGINE
+// =============================================================================
+
+enum NotificationChannel {
+  EMAIL
+  WHATSAPP
+  SMS
+  IN_APP
+
+  @@map("notification_channel")
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+
+  @@map("notification_status")
+}
+
+model NotificationTemplate {
+  id        String              @id @default(uuid()) @map("id")
+  tenantId  String              @map("tenant_id")
+  type      String              @map("type") // e.g., 'LEAVE_APPROVED'
+  channel   NotificationChannel @map("channel")
+  content   String              @map("content") @db.Text
+  isActive  Boolean             @default(true) @map("is_active")
+  createdAt DateTime            @default(now()) @map("created_at")
+  updatedAt DateTime            @updatedAt @map("updated_at")
+
+  @@unique([tenantId, type, channel], map: "notification_templates_unique")
+  @@map("notification_templates")
+}
+
+model NotificationLog {
+  id        String              @id @default(uuid()) @map("id")
+  tenantId  String              @map("tenant_id")
+  userId    String              @map("user_id")
+  channel   NotificationChannel @map("channel")
+  type      String              @map("type")
+  status    NotificationStatus  @default(PENDING) @map("status")
+  error     String?             @map("error")
+  sentAt    DateTime?           @map("sent_at")
+  createdAt DateTime            @default(now()) @map("created_at")
+
+  @@index([tenantId, userId], map: "notification_logs_tenant_user_idx")
+  @@index([status], map: "notification_logs_status_idx")
+  @@map("notification_logs")
+}
+
+// =============================================================================
+// SPRINT 4: EMPLOYEE LIFECYCLE ENGINE
+// =============================================================================
+
+model LifecycleEvent {
+  id             String           @id @default(uuid()) @map("id")
+  tenantId       String           @map("tenant_id")
+  employeeId     String           @map("employee_id")
+  previousStatus EmploymentStatus @map("previous_status")
+  newStatus      EmploymentStatus @map("new_status")
+  effectiveDate  DateTime         @map("effective_date") @db.Date
+  reason         String?          @map("reason")
+  changedBy      String           @map("changed_by")
+  createdAt      DateTime         @default(now()) @map("created_at")
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, employeeId], map: "lifecycle_events_tenant_employee_idx")
+  @@map("lifecycle_events")
+}

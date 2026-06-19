@@ -1,0 +1,1043 @@
+{
+  "authentication": [
+    {
+      "step": "Register",
+      "status": 201,
+      "data": {
+        "success": true,
+        "statusCode": 201,
+        "data": {
+          "success": true,
+          "statusCode": 201,
+          "data": {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YzNkMzZlNy02NTkyLTQ3NDItOGIwNy1jZTYwYzUzMzAxYjQiLCJlbWFpbCI6InJveSsxNzgxNzgxMTk3Mzg4QGRlbW9jb3JwLm15Iiwicm9sZSI6IkNPTVBBTllfQURNSU4iLCJ0ZW5hbnRJZCI6IjYwZTk2MDMyLTFiY2ItNGY3Ni05OTBkLWQyMDdkZDczZjUyZCIsImlhdCI6MTc4MTc4MTE5NywiZXhwIjoxNzgxNzgyMDk3fQ.DLB_LUk7n--wOcyK_iY-Sc0_hYpVnksaN1gCn4gcHYY",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YzNkMzZlNy02NTkyLTQ3NDItOGIwNy1jZTYwYzUzMzAxYjQiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc4MTc4MTE5NywiZXhwIjoxNzgyMzg1OTk3fQ.EUb1BxpE3NDLWErjoPvPys4hcAti4pbdkCXh9koO_3Q",
+            "expiresIn": 900,
+            "user": {
+              "id": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+              "email": "roy+1781781197388@democorp.my",
+              "firstName": "Roy",
+              "lastName": "Demo",
+              "fullName": "Roy Demo",
+              "role": "COMPANY_ADMIN",
+              "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+              "tenantName": "Demo Corp",
+              "isActive": true,
+              "lastLoginAt": null
+            }
+          },
+          "timestamp": "2026-06-18T11:13:17.562Z",
+          "requestId": "e805488c-22bb-4ee0-97ed-99378dfe455e"
+        },
+        "timestamp": "2026-06-18T11:13:17.562Z",
+        "requestId": "e805488c-22bb-4ee0-97ed-99378dfe455e"
+      }
+    },
+    {
+      "step": "Login",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YzNkMzZlNy02NTkyLTQ3NDItOGIwNy1jZTYwYzUzMzAxYjQiLCJlbWFpbCI6InJveSsxNzgxNzgxMTk3Mzg4QGRlbW9jb3JwLm15Iiwicm9sZSI6IkNPTVBBTllfQURNSU4iLCJ0ZW5hbnRJZCI6IjYwZTk2MDMyLTFiY2ItNGY3Ni05OTBkLWQyMDdkZDczZjUyZCIsImlhdCI6MTc4MTc4MTE5NywiZXhwIjoxNzgxNzgyMDk3fQ.DLB_LUk7n--wOcyK_iY-Sc0_hYpVnksaN1gCn4gcHYY",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YzNkMzZlNy02NTkyLTQ3NDItOGIwNy1jZTYwYzUzMzAxYjQiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc4MTc4MTE5NywiZXhwIjoxNzgyMzg1OTk3fQ.EUb1BxpE3NDLWErjoPvPys4hcAti4pbdkCXh9koO_3Q",
+            "expiresIn": 900,
+            "user": {
+              "id": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+              "email": "roy+1781781197388@democorp.my",
+              "firstName": "Roy",
+              "lastName": "Demo",
+              "fullName": "Roy Demo",
+              "role": "COMPANY_ADMIN",
+              "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+              "tenantName": "Demo Corp",
+              "isActive": true,
+              "lastLoginAt": null
+            }
+          },
+          "timestamp": "2026-06-18T11:13:17.671Z",
+          "requestId": "89ec94d1-d382-4dcc-ac9e-02d063598e8c"
+        },
+        "timestamp": "2026-06-18T11:13:17.671Z",
+        "requestId": "89ec94d1-d382-4dcc-ac9e-02d063598e8c"
+      }
+    },
+    {
+      "step": "Get Profile",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "id": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+            "email": "roy+1781781197388@democorp.my",
+            "firstName": "Roy",
+            "lastName": "Demo",
+            "fullName": "Roy Demo",
+            "role": "COMPANY_ADMIN",
+            "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+            "tenantName": "Demo Corp",
+            "isActive": true,
+            "lastLoginAt": "2026-06-18T11:13:17.658Z"
+          },
+          "timestamp": "2026-06-18T11:13:17.688Z",
+          "requestId": "a2386846-0048-4526-ad47-5dc0ace45ddb"
+        },
+        "timestamp": "2026-06-18T11:13:17.688Z",
+        "requestId": "a2386846-0048-4526-ad47-5dc0ace45ddb"
+      }
+    },
+    {
+      "step": "Refresh Token",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YzNkMzZlNy02NTkyLTQ3NDItOGIwNy1jZTYwYzUzMzAxYjQiLCJlbWFpbCI6InJveSsxNzgxNzgxMTk3Mzg4QGRlbW9jb3JwLm15Iiwicm9sZSI6IkNPTVBBTllfQURNSU4iLCJ0ZW5hbnRJZCI6IjYwZTk2MDMyLTFiY2ItNGY3Ni05OTBkLWQyMDdkZDczZjUyZCIsImlhdCI6MTc4MTc4MTE5NywiZXhwIjoxNzgxNzgyMDk3fQ.DLB_LUk7n--wOcyK_iY-Sc0_hYpVnksaN1gCn4gcHYY",
+            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YzNkMzZlNy02NTkyLTQ3NDItOGIwNy1jZTYwYzUzMzAxYjQiLCJ0eXBlIjoicmVmcmVzaCIsImlhdCI6MTc4MTc4MTE5NywiZXhwIjoxNzgyMzg1OTk3fQ.EUb1BxpE3NDLWErjoPvPys4hcAti4pbdkCXh9koO_3Q",
+            "expiresIn": 900,
+            "user": {
+              "id": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+              "email": "roy+1781781197388@democorp.my",
+              "firstName": "Roy",
+              "lastName": "Demo",
+              "fullName": "Roy Demo",
+              "role": "COMPANY_ADMIN",
+              "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+              "tenantName": "Demo Corp",
+              "isActive": true,
+              "lastLoginAt": "2026-06-18T11:13:17.658Z"
+            }
+          },
+          "timestamp": "2026-06-18T11:13:17.705Z",
+          "requestId": "d38f8a41-d66d-4783-bfa2-9520efb22b3f"
+        },
+        "timestamp": "2026-06-18T11:13:17.705Z",
+        "requestId": "d38f8a41-d66d-4783-bfa2-9520efb22b3f"
+      }
+    },
+    {
+      "step": "MFA Setup",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "secret": "IKUDNLZU2V4RTWTFXUFZ6ZP7GTHCKJML",
+            "qrCodeDataUrl": "data:image/png;base64,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8kbFGyq/6WGtdc3DWuuah7XWNT98pDJVTConFZPKGxWTyknFFypTxW+qmFSmijdUpooTlaliUpkq3lA5qThRmSreqLjpYa11zcNa65qHtdY19gcXqUwVk8pUMalMFScqU8WJylQxqUwVN6l8UTGpTBVvqPxNFW+o3FTxmx7WWtc8rLWueVhrXWN/8IHKScWkMlWcqLxR8YbKTRVfqEwV/ySVqWJSmSomlZsqJpU3Kn7Tw1rrmoe11jUPa61rfrisYlKZKiaVqWKq+EJlqjipmFROKiaVLypOVKaKSeWNiknljYqTijdUTlRuUpkqvnhYa13zsNa65mGtdc0PH1WcVHyhMlWcqJyoTBWTyknFpHJSMamcqJxUvFFxojJVnKj8pooTlaliUvknPay1rnlYa13zsNa65ofLVG6qOFE5qXij4ouKSeWk4kTlRGWq+EJlqjipmFSmijdUTiomlaliUplUpoqbHtZa1zysta55WGtdY3/wgcpUcaJyUjGpnFRMKicVk8pJxaQyVZyoTBWTym+qOFGZKiaVqeINlaliUrmp4p/0sNa65mGtdc3DWuuaHz6qeKPijYoTlanijYoTlROVmyreUDlROamYVKaKSWWqmFS+qHhD5URlqvhND2utax7WWtc8rLWu+eEjlb+p4guVNyreUJkqJpU3VKaKk4oTlUnljYovVN5QmSpOVKaKSWWquOlhrXXNw1rrmoe11jU/XFZxk8pJxX9JxaRyUvGGylTxhcpUcVIxqXxR8UbFScWkMlV88bDWuuZhrXXNw1rrmh9+mcobFW+oTBUnFW+oTBWTylTxhcoXFW9UTConKlPFScWkcqLym1Smipse1lrXPKy1rnlYa13zw39cxaQyVfymiknlpOKk4g2VE5WpYlKZKk5UJpWTipOKE5WTiknln/Sw1rrmYa11zcNa65of/sdUvKEyVZyoTBUnFV+o3KRyovKbKt6oeKPin/Sw1rrmYa11zcNa65offlnFP0llqpgq3qiYVKaKSWWq+KJiUplU3qi4SeVEZar4QuWk4m96WGtd87DWuuZhrXXND5ep/E0qJxU3qUwVk8qJyonKVHFScaLyhcpJxYnKicoXFZPKGypTxRcPa61rHtZa1zysta6xP1hrXfGw1rrmYa11zcNa65qHtdY1D2utax7WWtc8rLWueVhrXfOw1rrmYa11zcNa65qHtdY1D2utax7WWtc8rLWu+T8NbovqYt3TFQAAAABJRU5ErkJggg=="
+          },
+          "timestamp": "2026-06-18T11:13:17.926Z",
+          "requestId": "a3d4d43a-bfe8-4c21-94f0-ec2981de5a60"
+        },
+        "timestamp": "2026-06-18T11:13:17.926Z",
+        "requestId": "a3d4d43a-bfe8-4c21-94f0-ec2981de5a60"
+      }
+    },
+    {
+      "step": "MFA Verify",
+      "status": 401,
+      "data": {
+        "success": false,
+        "statusCode": 401,
+        "message": "Invalid TOTP token",
+        "error": "Unauthorized",
+        "timestamp": "2026-06-18T11:13:17.951Z",
+        "path": "/api/v1/auth/mfa/verify",
+        "requestId": "de04ffc3-8dc7-4aef-90f3-24e32499b7a6"
+      }
+    },
+    {
+      "step": "Forgot Password",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "message": "If an account with that email exists, a password reset link has been sent."
+          },
+          "timestamp": "2026-06-18T11:13:17.972Z",
+          "requestId": "f4fce991-42b4-4ac8-b581-84bd0a0e8ce4"
+        },
+        "timestamp": "2026-06-18T11:13:17.972Z",
+        "requestId": "f4fce991-42b4-4ac8-b581-84bd0a0e8ce4"
+      }
+    },
+    {
+      "step": "Reset Password",
+      "status": 400,
+      "data": {
+        "success": false,
+        "statusCode": 400,
+        "message": "Invalid or expired password reset token",
+        "error": "Bad Request",
+        "timestamp": "2026-06-18T11:13:17.989Z",
+        "path": "/api/v1/auth/reset-password",
+        "requestId": "95a6c35d-8093-46b8-a35a-4f11f6150cf7"
+      }
+    },
+    {
+      "step": "Logout",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "message": "Logged out successfully"
+          },
+          "timestamp": "2026-06-18T11:13:23.278Z",
+          "requestId": "86272bd8-a603-4e95-9974-ade16f7f08cc"
+        },
+        "timestamp": "2026-06-18T11:13:23.278Z",
+        "requestId": "86272bd8-a603-4e95-9974-ade16f7f08cc"
+      }
+    }
+  ],
+  "companySetup": [
+    {
+      "step": "Verify Tenant Created",
+      "data": {
+        "id": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+        "name": "Demo Corp",
+        "slug": "demo-corp-sk8i2k",
+        "plan": "TRIAL",
+        "country": "MY",
+        "isActive": true,
+        "settings": null,
+        "createdAt": "2026-06-18T11:13:17.551Z",
+        "updatedAt": "2026-06-18T11:13:17.551Z"
+      }
+    },
+    {
+      "step": "Create Company",
+      "data": {
+        "id": "bc0feb4b-52ed-4c54-8359-920e0e680a6a",
+        "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+        "slug": "b504b641-10ae-4b00-9693-385e5989c2d3",
+        "name": "Demo Corp HQ",
+        "legalName": null,
+        "regNumber": null,
+        "taxNumber": null,
+        "industry": "Technology",
+        "size": "SMALL",
+        "country": "MY",
+        "address": "123 Tech Lane",
+        "city": "Kuala Lumpur",
+        "state": "Kuala Lumpur",
+        "postcode": "50000",
+        "phone": "+60312345678",
+        "email": "contact@democorp.my",
+        "website": null,
+        "logoUrl": null,
+        "isActive": true,
+        "createdAt": "2026-06-18T11:13:18.082Z",
+        "updatedAt": "2026-06-18T11:13:18.082Z"
+      }
+    }
+  ],
+  "employeeLifecycle": [
+    {
+      "step": "Create Employee",
+      "status": 201,
+      "data": {
+        "success": true,
+        "statusCode": 201,
+        "data": {
+          "success": true,
+          "statusCode": 201,
+          "data": {
+            "id": "aad2b067-40aa-4b68-a084-5d161fb917b4",
+            "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+            "companyId": "bc0feb4b-52ed-4c54-8359-920e0e680a6a",
+            "userId": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+            "employeeNumber": "EMP-2026-00001",
+            "firstName": "Roy",
+            "lastName": "Demo",
+            "preferredName": null,
+            "dateOfBirth": "1990-01-01T00:00:00.000Z",
+            "gender": "MALE",
+            "nationality": "Malaysian",
+            "nricPassport": "900101-14-1234",
+            "visaDetails": null,
+            "personalEmail": "roy+1781781197388@democorp.my",
+            "workEmail": "roy+1781781197388@democorp.my",
+            "phone": "+60123456789",
+            "mobile": null,
+            "address": "456 Home Street",
+            "city": "Petaling Jaya",
+            "state": "Selangor",
+            "postcode": "46000",
+            "country": "MY",
+            "departmentId": null,
+            "teamId": null,
+            "branchId": null,
+            "managerId": null,
+            "jobTitle": "HR Director",
+            "jobLevel": null,
+            "salaryBand": null,
+            "employmentType": "FULL_TIME",
+            "employmentStatus": "PROBATION",
+            "hireDate": "2026-06-18T00:00:00.000Z",
+            "confirmationDate": null,
+            "terminationDate": null,
+            "probationEndDate": null,
+            "noticePeriodDays": 30,
+            "baseSalary": null,
+            "bankName": null,
+            "bankAccount": null,
+            "bankCode": null,
+            "emergencyContactName": "Jane Demo",
+            "emergencyContactPhone": "+60123456788",
+            "emergencyContactRelation": "Spouse",
+            "avatarUrl": null,
+            "isActive": true,
+            "createdAt": "2026-06-18T11:13:18.108Z",
+            "updatedAt": "2026-06-18T11:13:18.108Z"
+          },
+          "timestamp": "2026-06-18T11:13:18.122Z",
+          "requestId": "5671f9b5-1c2b-4fef-aa1f-40addb920ab9"
+        },
+        "timestamp": "2026-06-18T11:13:18.122Z",
+        "requestId": "5671f9b5-1c2b-4fef-aa1f-40addb920ab9"
+      }
+    },
+    {
+      "step": "Transition Status",
+      "status": 201,
+      "data": {
+        "success": true,
+        "statusCode": 201,
+        "data": {
+          "success": true,
+          "statusCode": 201,
+          "data": {
+            "id": "aad2b067-40aa-4b68-a084-5d161fb917b4",
+            "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+            "companyId": "bc0feb4b-52ed-4c54-8359-920e0e680a6a",
+            "userId": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+            "employeeNumber": "EMP-2026-00001",
+            "firstName": "Roy",
+            "lastName": "Demo",
+            "preferredName": null,
+            "dateOfBirth": "1990-01-01T00:00:00.000Z",
+            "gender": "MALE",
+            "nationality": "Malaysian",
+            "nricPassport": "900101-14-1234",
+            "visaDetails": null,
+            "personalEmail": "roy+1781781197388@democorp.my",
+            "workEmail": "roy+1781781197388@democorp.my",
+            "phone": "+60123456789",
+            "mobile": null,
+            "address": "456 Home Street",
+            "city": "Petaling Jaya",
+            "state": "Selangor",
+            "postcode": "46000",
+            "country": "MY",
+            "departmentId": null,
+            "teamId": null,
+            "branchId": null,
+            "managerId": null,
+            "jobTitle": "HR Director",
+            "jobLevel": null,
+            "salaryBand": null,
+            "employmentType": "FULL_TIME",
+            "employmentStatus": "ACTIVE",
+            "hireDate": "2026-06-18T00:00:00.000Z",
+            "confirmationDate": null,
+            "terminationDate": null,
+            "probationEndDate": null,
+            "noticePeriodDays": 30,
+            "baseSalary": null,
+            "bankName": null,
+            "bankAccount": null,
+            "bankCode": null,
+            "emergencyContactName": "Jane Demo",
+            "emergencyContactPhone": "+60123456788",
+            "emergencyContactRelation": "Spouse",
+            "avatarUrl": null,
+            "isActive": true,
+            "createdAt": "2026-06-18T11:13:18.108Z",
+            "updatedAt": "2026-06-18T11:13:18.140Z"
+          },
+          "timestamp": "2026-06-18T11:13:18.160Z",
+          "requestId": "109e9a6a-e35e-4871-8a15-20e3c2c60a23"
+        },
+        "timestamp": "2026-06-18T11:13:18.160Z",
+        "requestId": "109e9a6a-e35e-4871-8a15-20e3c2c60a23"
+      }
+    },
+    {
+      "step": "Apply Leave",
+      "status": 201,
+      "data": {
+        "success": true,
+        "statusCode": 201,
+        "data": {
+          "success": true,
+          "statusCode": 201,
+          "data": {
+            "id": "1cc12a29-a05b-4d7e-b56e-0dd0189b35e5",
+            "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+            "employeeId": "aad2b067-40aa-4b68-a084-5d161fb917b4",
+            "leaveTypeId": "e9b71fe2-f487-4661-8eaa-8874d983e456",
+            "startDate": "2026-06-18T00:00:00.000Z",
+            "endDate": "2026-06-20T00:00:00.000Z",
+            "days": "2",
+            "reason": "Vacation",
+            "status": "PENDING",
+            "managerId": null,
+            "reviewedAt": null,
+            "createdAt": "2026-06-18T11:13:18.181Z",
+            "updatedAt": "2026-06-18T11:13:18.181Z"
+          },
+          "timestamp": "2026-06-18T11:13:18.187Z",
+          "requestId": "37ff8b89-701f-4efa-a676-5c2793665742"
+        },
+        "timestamp": "2026-06-18T11:13:18.187Z",
+        "requestId": "37ff8b89-701f-4efa-a676-5c2793665742"
+      }
+    },
+    {
+      "step": "Manager Approval",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "id": "1cc12a29-a05b-4d7e-b56e-0dd0189b35e5",
+            "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+            "employeeId": "aad2b067-40aa-4b68-a084-5d161fb917b4",
+            "leaveTypeId": "e9b71fe2-f487-4661-8eaa-8874d983e456",
+            "startDate": "2026-06-18T00:00:00.000Z",
+            "endDate": "2026-06-20T00:00:00.000Z",
+            "days": "2",
+            "reason": "Vacation",
+            "status": "APPROVED",
+            "managerId": null,
+            "reviewedAt": "2026-06-18T11:13:18.201Z",
+            "createdAt": "2026-06-18T11:13:18.181Z",
+            "updatedAt": "2026-06-18T11:13:18.202Z"
+          },
+          "timestamp": "2026-06-18T11:13:18.207Z",
+          "requestId": "54ffc8ff-bd8f-4fb0-879a-878e7fe637c8"
+        },
+        "timestamp": "2026-06-18T11:13:18.207Z",
+        "requestId": "54ffc8ff-bd8f-4fb0-879a-878e7fe637c8"
+      }
+    },
+    {
+      "step": "Audit Logs Generated",
+      "data": [
+        {
+          "id": "3ab40ffd-7e12-4c65-a3c6-9809f77aec8d",
+          "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+          "userId": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+          "userEmail": null,
+          "userRole": null,
+          "action": "LEAVE_REQUEST_APPROVED",
+          "resource": "LeaveRequest",
+          "resourceId": "1cc12a29-a05b-4d7e-b56e-0dd0189b35e5",
+          "description": "Leave request ${request.id} approved",
+          "metadata": null,
+          "aiPrompt": null,
+          "aiResponse": null,
+          "aiSourceDocuments": null,
+          "ipAddress": null,
+          "userAgent": null,
+          "httpMethod": null,
+          "httpPath": null,
+          "httpStatus": null,
+          "durationMs": null,
+          "severity": "INFO",
+          "timestamp": "2026-06-18T11:13:18.207Z"
+        },
+        {
+          "id": "bcc3c926-4c24-49fb-a0e4-01600bd808e4",
+          "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+          "userId": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+          "userEmail": null,
+          "userRole": null,
+          "action": "LEAVE_REQUEST_CREATED",
+          "resource": "LeaveRequest",
+          "resourceId": "1cc12a29-a05b-4d7e-b56e-0dd0189b35e5",
+          "description": "Leave requested for ${days} days",
+          "metadata": null,
+          "aiPrompt": null,
+          "aiResponse": null,
+          "aiSourceDocuments": null,
+          "ipAddress": null,
+          "userAgent": null,
+          "httpMethod": null,
+          "httpPath": null,
+          "httpStatus": null,
+          "durationMs": null,
+          "severity": "INFO",
+          "timestamp": "2026-06-18T11:13:18.189Z"
+        },
+        {
+          "id": "e259de5e-5b97-454d-b919-9dbcf9d1dfe4",
+          "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+          "userId": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+          "userEmail": null,
+          "userRole": null,
+          "action": "LIFECYCLE_TRANSITION",
+          "resource": "Employee",
+          "resourceId": "aad2b067-40aa-4b68-a084-5d161fb917b4",
+          "description": "Employee transitioned from ${previousStatus} to ${newStatus}",
+          "metadata": null,
+          "aiPrompt": null,
+          "aiResponse": null,
+          "aiSourceDocuments": null,
+          "ipAddress": null,
+          "userAgent": null,
+          "httpMethod": null,
+          "httpPath": null,
+          "httpStatus": null,
+          "durationMs": null,
+          "severity": "INFO",
+          "timestamp": "2026-06-18T11:13:18.163Z"
+        },
+        {
+          "id": "c33d4687-4bb6-48a5-9a3d-2678fde476e4",
+          "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+          "userId": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+          "userEmail": null,
+          "userRole": null,
+          "action": "TOKEN_REFRESHED",
+          "resource": "System",
+          "resourceId": null,
+          "description": "Action ${payload.action} performed",
+          "metadata": {},
+          "aiPrompt": null,
+          "aiResponse": null,
+          "aiSourceDocuments": null,
+          "ipAddress": null,
+          "userAgent": null,
+          "httpMethod": null,
+          "httpPath": null,
+          "httpStatus": null,
+          "durationMs": null,
+          "severity": "INFO",
+          "timestamp": "2026-06-18T11:13:17.706Z"
+        },
+        {
+          "id": "7475b48f-abab-4c1b-87f8-f57fb51f7f28",
+          "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+          "userId": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+          "userEmail": null,
+          "userRole": null,
+          "action": "USER_LOGIN",
+          "resource": "System",
+          "resourceId": null,
+          "description": "Action ${payload.action} performed",
+          "metadata": {
+            "email": "roy+1781781197388@democorp.my"
+          },
+          "aiPrompt": null,
+          "aiResponse": null,
+          "aiSourceDocuments": null,
+          "ipAddress": null,
+          "userAgent": null,
+          "httpMethod": null,
+          "httpPath": null,
+          "httpStatus": null,
+          "durationMs": null,
+          "severity": "INFO",
+          "timestamp": "2026-06-18T11:13:17.666Z"
+        }
+      ]
+    }
+  ],
+  "aiManager": [
+    {
+      "step": "Ask AI HR Question 1",
+      "question": "What is the notice period for resignation?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:20.189Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "e3570f4d-eca8-46b0-96ce-fe51417a87a3"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 2",
+      "question": "How many days of annual leave am I entitled to?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:20.631Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "38a7f128-e83b-4bc1-8274-e0766884fdcb"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 3",
+      "question": "Is there paid maternity leave?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:21.102Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "62b61be4-bbb5-49b7-b4f8-66d265fe66a4"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 4",
+      "question": "What are the working hours under the Employment Act?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:21.381Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "9243bf10-c268-49d6-a635-1366abf06304"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 5",
+      "question": "How is overtime pay calculated?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:21.539Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "4fe8bd68-0aa9-497b-ba69-9b7dae88ebd9"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 6",
+      "question": "Can I be fired without a warning letter?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:21.725Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "32a31792-0006-4b97-8564-97b59d9ec743"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 7",
+      "question": "What constitutes serious misconduct?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:22.089Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "3b38383c-f359-49c8-b080-50476c710195"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 8",
+      "question": "Are public holidays paid?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:22.248Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "b6a231f3-5e06-4b28-9bde-8c9cdc9e9c13"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 9",
+      "question": "How many days of sick leave can I take?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:22.408Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "2b7908c4-33e3-4dd6-bd21-e82d3565020d"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 10",
+      "question": "Is hospitalization leave separate from sick leave?",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:22.616Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "6b25e958-c78d-4a39-8577-b8d048a3125c"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 11",
+      "question": "Can my employer deduct my salary for mistakes?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.626Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "75679429-f12a-4387-a06a-4196690aaa91"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 12",
+      "question": "What is the retirement age?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.640Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "c4bd6da8-ea72-418e-8600-3a459db6ecc1"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 13",
+      "question": "Can I carry forward my annual leave?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.652Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "af859e34-40f0-4c9b-941a-71982802c8cd"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 14",
+      "question": "What happens if I don't give enough notice period?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.663Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "ebd40a08-71ea-4166-871a-3c31f042eefd"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 15",
+      "question": "Are part-time employees entitled to EPF?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.672Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "1e463119-b895-40fc-9b72-df8782694c12"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 16",
+      "question": "Is there a minimum wage?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.684Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "c136e90a-2f9d-4145-90a3-c9a1595a3c54"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 17",
+      "question": "What is the policy on sexual harassment?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.700Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "4c48e1c7-4c0c-45cc-ba8f-47cc4cbc6f27"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 18",
+      "question": "Do I get paid for working on a rest day?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.716Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "01c696e5-3d5c-46a6-b436-355eb3f6cd73"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 19",
+      "question": "Can my employer force me to work overtime?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.730Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "d0203dfd-3c46-4b73-90a2-a94f06de82f5"
+      }
+    },
+    {
+      "step": "Ask AI HR Question 20",
+      "question": "What is the difference between termination and dismissal?",
+      "status": 429,
+      "data": {
+        "success": false,
+        "statusCode": 429,
+        "message": "ThrottlerException: Too Many Requests",
+        "error": "ThrottlerException: Too Many Requests",
+        "timestamp": "2026-06-18T11:13:22.741Z",
+        "path": "/api/v1/ai/query",
+        "requestId": "9fa6f6b3-7248-4540-b845-a078289f5a34"
+      }
+    }
+  ],
+  "compliance": [
+    {
+      "step": "Generate Handbook",
+      "status": 500,
+      "data": {
+        "success": false,
+        "statusCode": 500,
+        "message": "An unexpected error occurred. Our team has been notified.",
+        "error": "Internal Server Error",
+        "timestamp": "2026-06-18T11:13:22.992Z",
+        "path": "/api/v1/documents/generate",
+        "requestId": "7750b35f-10bd-4655-b3c8-499bce6721d6"
+      }
+    },
+    {
+      "step": "Compliance Assessment",
+      "status": 201,
+      "data": {
+        "success": true,
+        "statusCode": 201,
+        "data": {
+          "success": true,
+          "statusCode": 201,
+          "data": {
+            "id": "f105e8be-9266-4974-b37f-bfd18c33bd2d",
+            "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+            "companyId": "bc0feb4b-52ed-4c54-8359-920e0e680a6a",
+            "score": 0,
+            "riskLevel": "CRITICAL",
+            "checklist": [
+              {
+                "item": "EMPLOYEE_HANDBOOK",
+                "status": "FAIL",
+                "category": "POLICY_DOCUMENT",
+                "evidence": "Missing"
+              },
+              {
+                "item": "CODE_OF_CONDUCT",
+                "status": "FAIL",
+                "category": "POLICY_DOCUMENT",
+                "evidence": "Missing"
+              },
+              {
+                "item": "DATA_PROTECTION_POLICY",
+                "status": "FAIL",
+                "category": "POLICY_DOCUMENT",
+                "evidence": "Missing"
+              },
+              {
+                "item": "SEXUAL_HARASSMENT_POLICY",
+                "status": "FAIL",
+                "category": "POLICY_DOCUMENT",
+                "evidence": "Missing"
+              }
+            ],
+            "missingPolicies": [
+              "EMPLOYEE_HANDBOOK",
+              "CODE_OF_CONDUCT",
+              "DATA_PROTECTION_POLICY",
+              "SEXUAL_HARASSMENT_POLICY"
+            ],
+            "reportUrl": null,
+            "notes": null,
+            "assessedAt": "2026-06-18T11:13:23.014Z",
+            "createdBy": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+            "createdAt": "2026-06-18T11:13:23.016Z",
+            "updatedAt": "2026-06-18T11:13:23.016Z"
+          },
+          "timestamp": "2026-06-18T11:13:23.019Z",
+          "requestId": "6b616581-7a1b-413f-9525-06500b5b8ae6"
+        },
+        "timestamp": "2026-06-18T11:13:23.019Z",
+        "requestId": "6b616581-7a1b-413f-9525-06500b5b8ae6"
+      }
+    },
+    {
+      "step": "Compliance Score",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "id": "f105e8be-9266-4974-b37f-bfd18c33bd2d",
+            "tenantId": "60e96032-1bcb-4f76-990d-d207dd73f52d",
+            "companyId": "bc0feb4b-52ed-4c54-8359-920e0e680a6a",
+            "score": 0,
+            "riskLevel": "CRITICAL",
+            "checklist": [
+              {
+                "item": "EMPLOYEE_HANDBOOK",
+                "status": "FAIL",
+                "category": "POLICY_DOCUMENT",
+                "evidence": "Missing"
+              },
+              {
+                "item": "CODE_OF_CONDUCT",
+                "status": "FAIL",
+                "category": "POLICY_DOCUMENT",
+                "evidence": "Missing"
+              },
+              {
+                "item": "DATA_PROTECTION_POLICY",
+                "status": "FAIL",
+                "category": "POLICY_DOCUMENT",
+                "evidence": "Missing"
+              },
+              {
+                "item": "SEXUAL_HARASSMENT_POLICY",
+                "status": "FAIL",
+                "category": "POLICY_DOCUMENT",
+                "evidence": "Missing"
+              }
+            ],
+            "missingPolicies": [
+              "EMPLOYEE_HANDBOOK",
+              "CODE_OF_CONDUCT",
+              "DATA_PROTECTION_POLICY",
+              "SEXUAL_HARASSMENT_POLICY"
+            ],
+            "reportUrl": null,
+            "notes": null,
+            "assessedAt": "2026-06-18T11:13:23.014Z",
+            "createdBy": "4c3d36e7-6592-4742-8b07-ce60c53301b4",
+            "createdAt": "2026-06-18T11:13:23.016Z",
+            "updatedAt": "2026-06-18T11:13:23.016Z"
+          },
+          "timestamp": "2026-06-18T11:13:23.036Z",
+          "requestId": "9b3cd99e-fb9c-4cfa-a5d4-a3cefc43dfd1"
+        },
+        "timestamp": "2026-06-18T11:13:23.036Z",
+        "requestId": "9b3cd99e-fb9c-4cfa-a5d4-a3cefc43dfd1"
+      }
+    }
+  ],
+  "security": [
+    {
+      "step": "Fetch Analytics Dashboard (RBAC Check)",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": {
+            "headcount": {
+              "total": 0,
+              "new": 0
+            },
+            "leaves": {
+              "active": 0,
+              "annual": 12,
+              "medical": 4,
+              "emergency": 1
+            },
+            "documents": 0,
+            "ai": {
+              "queries": 0
+            }
+          },
+          "timestamp": "2026-06-18T11:13:18.041Z",
+          "requestId": "0133682d-8958-4edb-b9ad-4b33d5569967"
+        },
+        "timestamp": "2026-06-18T11:13:18.041Z",
+        "requestId": "0133682d-8958-4edb-b9ad-4b33d5569967"
+      }
+    },
+    {
+      "step": "Cross-Tenant Access (Employee)",
+      "status": 200,
+      "data": {
+        "success": true,
+        "statusCode": 200,
+        "data": {
+          "success": true,
+          "statusCode": 200,
+          "data": [],
+          "timestamp": "2026-06-18T11:13:23.267Z",
+          "requestId": "1e99d300-72f0-46b9-820c-dc6ab6654ca0"
+        },
+        "timestamp": "2026-06-18T11:13:23.267Z",
+        "requestId": "1e99d300-72f0-46b9-820c-dc6ab6654ca0"
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# HRManager4U.ai
+node_modules
+.env
+.env.local
+.env.production
+dist
+.next
+build
+coverage
+*.log
+.turbo
+.DS_Store
+*.pem

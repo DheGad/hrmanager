@@ -1,0 +1,37 @@
+# =============================================================================
+# HRManager4U.ai — NestJS API Dockerfile (Development)
+# =============================================================================
+FROM node:20-alpine
+
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    python3 \
+    make \
+    g++
+
+# Puppeteer config
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+WORKDIR /app
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Install deps
+RUN pnpm install --frozen-lockfile
+
+# Copy source
+COPY . .
+
+EXPOSE 4000
+
+CMD ["pnpm", "run", "start:dev"]

@@ -1,0 +1,16 @@
+# =============================================================================
+# HRManager4U.ai — Cron Jobs for Production
+# Install: sudo crontab -e (as root on production server)
+# =============================================================================
+
+# ─── PostgreSQL Backups ──────────────────────────────────────────────────────
+# Full backup: daily at 02:00 UTC
+0 2 * * * DB_HOST=postgres DB_USER=hrmanager DB_NAME=hrmanager4u DB_PASSWORD=$(cat /run/secrets/db_password) /opt/hrmanager4u/infra/scripts/backup-postgres.sh >> /var/log/hrmanager4u/backup-postgres.log 2>&1
+
+# ─── MinIO Backups ───────────────────────────────────────────────────────────
+# Mirror backup: daily at 03:00 UTC
+0 3 * * * MINIO_ALIAS=minio MINIO_BUCKET=hrmanager /opt/hrmanager4u/infra/scripts/backup-minio.sh >> /var/log/hrmanager4u/backup-minio.log 2>&1
+
+# ─── Health Uptime Check ────────────────────────────────────────────────────
+# Every 5 minutes: ping health endpoint and alert if down
+*/5 * * * * curl -sf http://localhost:4000/api/v1/health > /dev/null || echo "[$(date)] API health check FAILED" >> /var/log/hrmanager4u/health.log
