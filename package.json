@@ -2,7 +2,7 @@
   "name": "hrmanager4u",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@11.7.0",
+  "packageManager": "pnpm@9.15.4",
   "description": "HRManager4U.ai — Enterprise AI HR Operating System for SMEs",
   "scripts": {
     "dev": "turbo run dev",
