@@ -1,0 +1,11 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "apps/api/Dockerfile"
+
+[deploy]
+startCommand = "pnpm --filter api start:prod"
+healthcheckPath = "/api/v1/control-center/health"
+
+[env]
+NODE_ENV = "production"
+ENABLE_CONTROL_CENTER = "true"
