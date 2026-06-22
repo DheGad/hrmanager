@@ -2,6 +2,7 @@ services:
   - type: web
     name: hrmanager4u-api
     env: node
+    plan: free
     buildCommand: pnpm install && pnpm --filter api build
     startCommand: pnpm --filter api start:prod
     envVars:
@@ -20,3 +21,4 @@ databases:
   - name: hrmanager4u-db
     databaseName: hrmanager4u
     user: hrmanager4u_user
+    plan: free
