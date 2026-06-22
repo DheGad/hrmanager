@@ -3,9 +3,11 @@ services:
     name: hrmanager4u-api
     env: node
     plan: free
-    buildCommand: pnpm install && pnpm --filter api build
-    startCommand: pnpm --filter api start:prod
+    buildCommand: pnpm install && pnpm --filter api db:generate && pnpm --filter api build
+    startCommand: pnpm --filter api db:migrate && pnpm --filter api db:seed && pnpm --filter api start:prod
     envVars:
+      - key: NODE_VERSION
+        value: 20
       - key: DATABASE_URL
         fromDatabase:
           name: hrmanager4u-db
